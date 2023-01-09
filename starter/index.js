@@ -86,3 +86,68 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+
+    let totalMonths = finances.length;
+
+    let netProfits = 0;
+
+// i = index, this is like x in algebra maths
+// i = 0 says that the index is = to 0
+// i < finances.length says that the index has to be less than the finances.length
+// i++ means that it is index + 1 the ++ is a shorcut for +1
+// This means the index starts at 0, it has to finish at the length of  finances.length  ( which is the amount of months there are in the list)
+
+    for (let i = 0; i < finances.length; i++) { 
+// sums up the total in the amount of net profit/loss
+// netProfits += is a shortcut of netProfits = netProfits + finances
+     netProfits += finances[i][1]; 
+ }
+
+
+ //  To find the average change i need to first work out the total change then divide it by the number of months.
+    let totalChange = 0; 
+
+// Create a vairbale for both the greatest and lowest profit/loss. Need to do this for both dates and amount.
+    let greatestIncreaseMonth = finances[0][0];
+    let greatestIncreaseAmount = 0;
+    let greatestDecreaseMonth = finances[0][0];
+    let greatestDecreaseAmount = 0;
+
+
+// iterate through the list of finances, startting at the second month (since there is no cahnge in profit for the first month)
+    for (let i = 1; i < finances.length; i++) {
+// get the current month's proffit, using an array to get to the secon string or value in the array. The i is the index therefore referring to every array and 1 is to get to the second part of the array.
+// current month's profit
+     let currentProfit = finances[i][1]; 
+// previous month's profit, this is done by the -1 in the index
+     let previousProfit = finances[i-1][1];
+// calculate the change in profit between the current month and previous month
+     let changeInProfit = currentProfit - previousProfit;
+// add the change in profit to the total change
+     totalChange += changeInProfit; 
+
+// if the change in profit is greater than the previous greatest amount,  this will update it.
+     if (changeInProfit > greatestIncreaseAmount) {
+         greatestIncreaseDate = finances[i][0];
+         greatestIncreaseAmount = changeInProfit;
+
+// if the change in profit is less than the previous lower amount,  this will update it.
+     } else if (changeInProfit < greatestDecreaseAmount) {
+         greatestDecreaseDate = finances[i-1][0];
+         greatestDecreaseAmount = changeInProfit;
+     }
+     
+ }
+ // divide the total change in profits by the number of changes in profits to get the average
+ let averageChange = totalChange / (finances.length - 1);
+
+ 
+
+ console.table('Financial Analysis');
+ console.table('----------------------------');
+ console.table(`Total Months: ${totalMonths};`);
+ console.table(`Total: $${netProfits.toFixed(2)};`);
+ console.table(`Average Change: $${averageChange.toFixed(2)};`);
+ console.table(`Greatest increase in profits in ${greatestIncreaseDate}: was ($${greatestIncreaseAmount});`);
+ console.table(`Greatest decrease in profits in ${greatestDecreaseDate}: was ($${greatestDecreaseAmount});`);
